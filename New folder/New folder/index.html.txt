@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مروان & جنى ✨</title>
+    <!-- استدعاء الخط العربي والشكل -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            text-align: center;
+            overflow-x: hidden;
+        }
+        
+        /* شاشة الباسورد */
+        #lock-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #111;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        #lock-screen h2 {
+            margin-bottom: 20px;
+            color: #ff4d6d;
+            font-size: 24px;
+        }
+        #lock-screen input {
+            padding: 12px 20px;
+            font-size: 18px;
+            border-radius: 25px;
+            border: 2px solid #ff4d6d;
+            outline: none;
+            text-align: center;
+            background: #222;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        #lock-screen button {
+            padding: 10px 30px;
+            font-size: 16px;
+            border-radius: 25px;
+            border: none;
+            background: #ff4d6d;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        #lock-screen button:hover {
+            background: #ff758f;
+        }
+
+        /* محتوى الموقع الأساسي */
+        #main-content {
+            display: none; /* يتفتح لما الباسورد يكون صح */
+            padding: 40px 20px;
+        }
+
+        .header-title {
+            margin-top: 40px;
+            font-size: 32px;
+            color: #ff4d6d;
+        }
+
+        .sub-title {
+            font-size: 18px;
+            color: #ccc;
+            margin: 15px 0 30px;
+        }
+
+        /* زرار التحكم في الأغنية */
+        .music-control {
+            margin: 15px auto;
+            background: rgba(255, 77, 109, 0.1);
+            border: 1px solid #ff4d6d;
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            color: #ff758f;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .music-control:hover {
+            background: rgba(255, 77, 109, 0.2);
+        }
+
+        /* قسم عداد الوقت */
+        .counter-section {
+            background: rgba(255, 77, 109, 0.08);
+            border: 1px dashed #ff4d6d;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 20px auto 40px;
+            padding: 25px 15px;
+        }
+        .counter-section h3 {
+            color: #ff758f;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .timer-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .time-box {
+            background: #1a1a1a;
+            border: 1px solid #ff4d6d;
+            border-radius: 12px;
+            padding: 10px;
+            min-width: 70px;
+        }
+        .time-box .number {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff4d6d;
+        }
+        .time-box .label {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 4px;
+        }
+
+        /* شبكة الصور */
+        .photo-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+        }
+        .photo-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 15px;
+            width: 260px;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.15);
+            transition: transform 0.3s;
+        }
+        .photo-card:hover {
+            transform: translateY(-5px);
+        }
+        .photo-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .photo-card figcaption {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #ff758f;
+        }
+
+        /* قسم الرسالة القلبية */
+        .message-section {
+            background: rgba(255, 77, 109, 0.05);
+            border: 1px solid #ff4d6d;
+            border-radius: 20px;
+            max-width: 650px;
+            margin: 50px auto;
+            padding: 30px;
+            box-shadow: 0 0 25px rgba(255, 77, 109, 0.2);
+        }
+        .message-section h2 {
+            color: #ff4d6d;
+            margin-bottom: 20px;
+            font-size: 22px;
+            line-height: 1.6;
+        }
+        .message-section p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #eee;
+            text-align: justify;
+            direction: rtl;
+        }
+        .signature {
+            display: block;
+            margin-top: 25px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff758f;
+        }
+
+        footer {
+            margin-top: 50px;
+            color: #777;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- تشغيل الأغنية في الخلفية -->
+    <audio id="loveSong" loop>
+        <source src="song.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- شاشة إدخال الباسورد -->
+    <div id="lock-screen">
+        <h2>أدخل السر لفتح المفاجأة 🔒</h2>
+        <input type="password" id="passInput" placeholder="كلمة المرور">
+        <button onclick="checkPass()">دخول ✨</button>
+        <p id="error-msg" style="color: red; margin-top: 10px; display: none;">كلمة المرور غير صحيحة! ❌</p>
+    </div>
+
+    <!-- محتوى الموقع بعد فتح الباسورد -->
+    <div id="main-content">
+
+        <h1 class="header-title">وجودك جنبي بيخلي أيامي أحلى ❤️</h1>
+        <p class="sub-title">عيوني بتحبك قبل قلبي.. وبكون مبسوطة وأنا شايفاك ✨</p>
+
+        <!-- زرار تشغيل/إيقاف الأغنية -->
+        <div>
+            <div class="music-control" onclick="toggleMusic()">
+                <span id="music-icon">🎵</span> <span id="music-text">إيقاف الأغنية ⏸</span>
+            </div>
+        </div>
+
+        <!-- قسم العداد الزمني -->
+        <div class="counter-section">
+            <h3>بقالنا أكتر من تلت سنين ويارب العمر كله تكون معايا وجمبي 🫂🏡</h3>
+            
+            <div class="timer-grid">
+                <div class="time-box">
+                    <div class="number" id="days">0</div>
+                    <div class="label">يوم</div>
+                </div>
+                <div class="time-box">
+                    <div class="number" id="hours">0</div>
+                    <div class="label">ساعة</div>
+                </div>
+                <div class="time-box">
+                    <div class="number" id="minutes">0</div>
+                    <div class="label">دقيقة</div>
+                </div>
+                <div class="time-box">
+                    <div class="number" id="seconds">0</div>
+                    <div class="label">ثانية</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم الصور -->
+        <div class="photo-gallery">
+            <figure class="photo-card">
+                <img src="photo1.jpg" alt="ذكرى 1">
+                <figcaption>لحظة من العمر ✨</figcaption>
+            </figure>
+
+            <figure class="photo-card">
+                <img src="photo2.jpg" alt="ذكرى 2">
+                <figcaption>تفاصيل صغيرة 💖</figcaption>
+            </figure>
+
+            <figure class="photo-card">
+                <img src="photo3.jpg" alt="ذكرى 3">
+                <figcaption>أيام حلوة سوا 🌸</figcaption>
+            </figure>
+
+            <figure class="photo-card">
+                <img src="photo4.jpg" alt="ذكرى 4">
+                <figcaption>والأجمل لسه جاي 💫</figcaption>
+            </figure>
+        </div>
+
+        <!-- قسم الرسالة الشخصية -->
+        <div class="message-section">
+            <h2>مش محتاجة مناسبة عشان أقولك انك اغلى حاجة و اني بحب كل حاجة بينا 🫂</h2>
+            <p>
+                بما اني حاسة أن الفترة دي مش احسن حاجة وحاسة انك مضغوط شوية كنت عايزة اقولك اني بحبك اوي يحبيبي يارب دايما تكون معايا وجمبي انا بحبك اوي والله وبحب دايما وجودك في كل حاجة في حياتي مليش حد غيرك انت حبيبي وصاحبي واخويا وكل حاجة ليا في الدنيا كل تفصيلة بينا دايما في قلبي و في بالي يارب نفضل دايما سوا و مع بعض في كل خطوة و ربنا يكتبلنا كل الخير سوا و نصيبنا يكون مع بعض ربنا يخليك ليا يحبيبي و يارب اشوفك دايما مرتاح وكويس و ربنا يريح قلبك وبالك و يكرمك بكل حاجة حلوة زيك ، بحبك اوي اوي و فخورة بيك دايما و شايفاك احسن واشطر حد في الدنيا يارب اشوفك محقق كل حاجة حلوة في الدنيا و ربنا يكرمك بكل حاجة نفسك فيها و يارب تبقى دايما معايا وجمبي في كل خطوة في حياتي ، بحبك اوي ينور عيني 🌍👫
+            </p>
+            <span class="signature">جنى ♡ مروان</span>
+        </div>
+
+        <footer>
+            <span>Made with Love For Marwan & Jana ❤️</span>
+        </footer>
+
+    </div>
+
+    <!-- كود التحقق، العداد، وتحكم الأغنية -->
+    <script>
+        function checkPass() {
+            let pass = document.getElementById("passInput").value;
+            let correctPass = "2572023"; // الباسورد المطلوب
+
+            if (pass === correctPass) {
+                document.getElementById("lock-screen").style.display = "none";
+                document.getElementById("main-content").style.display = "block";
+                
+                // تشغيل الأغنية تلقائياً عند فتح الموقع
+                let song = document.getElementById("loveSong");
+                song.play().catch(error => {
+                    console.log("Audio autoplay prevented");
+                });
+
+                startCounter(); // تشغيل العداد
+            } else {
+                document.getElementById("error-msg").style.display = "block";
+            }
+        }
+
+        // تحكم في إيقاف وتشغيل الأغنية بالزرار
+        function toggleMusic() {
+            let song = document.getElementById("loveSong");
+            let musicText = document.getElementById("music-text");
+            if (song.paused) {
+                song.play();
+                musicText.innerText = "إيقاف الأغنية ⏸";
+            } else {
+                song.pause();
+                musicText.innerText = "تشغيل الأغنية 🎶";
+            }
+        }
+
+        // كود حساب الوقت من التاريخ المطلوب (25/7/2023)
+        function startCounter() {
+            const startDate = new Date("2023-07-25T00:00:00");
+
+            function update() {
+                const now = new Date();
+                const diff = now - startDate;
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((diff / 1000 / 60) % 60);
+                const seconds = Math.floor((diff / 1000) % 60);
+
+                document.getElementById("days").innerText = days;
+                document.getElementById("hours").innerText = hours;
+                document.getElementById("minutes").innerText = minutes;
+                document.getElementById("seconds").innerText = seconds;
+            }
+
+            update();
+            setInterval(update, 1000);
+        }
+    </script>
+</body>
+</html>
